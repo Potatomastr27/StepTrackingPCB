@@ -17,8 +17,8 @@ const uint8_t RUNNING_PIN = 10;              //D10
 //D12
 //D13
 
-const uint8_t I2C_DATA_PIN = 18;             //SDA
-const uint8_t I2C_CLOCK_PIN = 19;            //SCL
+const uint8_t I2C_DATA_PIN = SDA;            //SDA
+const uint8_t I2C_CLOCK_PIN = SCL;           //SCL
 
 const uint8_t FILTERED_X_AXIS_PIN = A0;      //A0
 const uint8_t FILTERED_Y_AXIS_PIN = A1;      //A1
@@ -26,6 +26,9 @@ const uint8_t FILTERED_Z_AXIS_PIN = A2;      //A2
 //A3
 //A4
 //A5
+
+#define BUTTON_PRESSED LOW
+#define BUTTON_RELEASED HIGH
 
 void setupPins(){
     pinMode(RESET_STEP_PIN, INPUT_PULLUP);
