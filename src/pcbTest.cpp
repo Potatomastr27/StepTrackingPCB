@@ -6,9 +6,9 @@ long prevBlink = 0;
 char lcdBuffer[50];
 
 void setup() {
-  setupPins();
-  setupLCD();
-  lcd.print("Hello World");
+    setupPins();
+    setupLCD();
+    lcd.print("Hello World");
 }
 
 void loop() {
