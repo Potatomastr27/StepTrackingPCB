@@ -14,6 +14,7 @@ void setup() {
     lcd.setCursor(0,0);
     lcd.print("Hello World");
     Serial.println("Begin");
+    delay(10000);
 }
 
 void loop() {
