@@ -10,10 +10,12 @@ Each Environment has its own main file.
 Currrently the environments are:
 
 [env:release]
+
 runs main.cpp
 This is the release code that we upload to the pcb for the demonstration.
 
 [env:pcbTest]
+
 runs pcbTest.cpp
 This is a test that can be run to make sure the arduino has successfully connected to each component.
 Will blink LEDs, respond to button presses, read from the Sensor and print to lcd.
