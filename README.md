@@ -1,6 +1,7 @@
 # StepTrackingPCB
 
---------------- <Environments> -----------------
+--------------- Environments -----------------
+
 There are multiple "Environments" in this project
 
 You can change the environment in the bar at the bottom (by default it should say env:default)
@@ -19,13 +20,13 @@ Will blink LEDs, respond to button presses, read from the Sensor and print to lc
 
 You can add more if you want.
 
---------------- <Headers> -----------------
+--------------- Headers -----------------
 
 This project also contains multiple header files (eg. lcd.h)
 These exist so that code can be shared between different main files, eg. so we dont have to write different lcd setups and pin definitions for each main file.
 
 
---------------- <Platformio> -------------------
+--------------- Platformio -------------------
 
 Platformio is a embedded software compiler/environment thing that can be configured to program any board.
 This project was made using vsCode using platformio, this project will not run correctly on the ArduinoIDE without some changes.
