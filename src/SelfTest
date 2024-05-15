@@ -1,4 +1,4 @@
-const int stPwrPin = 1;
+include "pinDef.h"
 
 int initialX;
 int initialy;
@@ -20,12 +20,10 @@ double tolerance = 0.01; //random value, we can change to get it workig properly
 
 
 void setup() {
-  pinMode(stPwrPin, OUTPUT);
-  pinMode(xacceleration, INPUT);
-  pinMode(yacceleration, INPUT);
-  pinMode(zacceleration, INPUT);
-
-
+  // pinMode(stPwrPin, OUTPUT);
+  // pinMode(xacceleration, INPUT);
+  // pinMode(yacceleration, INPUT);
+  // pinMode(zacceleration, INPUT);
 }
 
 double mapValues(double input){
@@ -61,24 +59,24 @@ bool selfTest(){
 
 
 void setSTPinHigh(){
- digitalWrite(stPwrPin, HIGH);
+ digitalWrite(SELF_TEST_PIN, HIGH);
 }
 
 void setSTPinLow(){
- digitalWrite(stPwrPin, LOW);
+ digitalWrite(SELF_TEST_PIN, LOW);
 }
 
 int getXAcceleration(){
-  double beforeMappedXValue = analogRead(xacceleration);
+  double beforeMappedXValue = analogRead(FILTERED_X_AXIS_PIN);
   return mapValues(beforeMappedXValue);
 }
 
 int getYAcceleration(){
-  double beforeMappedYValue = analogRead(yacceleration);
+  double beforeMappedYValue = analogRead(FILTERED_Y_AXIS_PIN);
   return mapValues(beforeMappedYValue);
 }
 
 int getZAcceleration(){
-  double beforeMappedZValue = analogRead(xacceleration);
+  double beforeMappedZValue = analogRead(FILTERED_Z_AXIS_PIN);
   return mapValues(beforeMappedZValue);
 }
