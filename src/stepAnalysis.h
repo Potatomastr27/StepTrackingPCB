@@ -18,15 +18,16 @@ int avg;
 long movingAvgTimeBuffer[TIME_BUFFER_SIZE]; // The last entry of the buffer will be updated every call even if no step has occured
 long avgStepTime;
 
-int internalStepCount = 0;
-
+/**
+ * @brief Sets all the interal data to their inital values
+*/
 void setupAnalysis();
 
 /**
  * @brief This function should be run as often as possible for more accurate results
- * @returns if a step occured
+ * @returns 1 if a step occured 0 otherwise
 */
-bool addReading(int reading);
+int addReading(int reading);
 
 int getAvg();
 /**
@@ -34,7 +35,6 @@ int getAvg();
  * @returns 0,1,2 -> Stationary, Walking, Running or -1 if there is not enough data to determine yet or -2 if an error occured with the analysis
 */
 int getMovementRate();
-
 
 
 

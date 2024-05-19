@@ -3,13 +3,16 @@
 
 void setupAnalysis(){
     // Fill with initial data
-    for(int i = 0; i < BUFFER_SIZE; i++){
-        movingAvgBuffer[i] = 0;
+    for(auto data : movingAvgBuffer){
+        data = 0;
+    }
+    for(auto data : movingAvgTimeBuffer){
+        data = 0;
     }
     avg = 0;
 }
 
-bool addReading(int reading){
+int addReading(int reading){
     long functionCallTime = millis(); // We will need to use this later for saving in the time Buffer
 
     int newAvg = 0;
@@ -37,11 +40,10 @@ bool addReading(int reading){
     if ((isNewAvgAboveThreshold && isPrevAvgAboveThreshold == false) == false){
         // A step has not occured so we just need to update the time between steps buffer and return false
         movingAvgTimeBuffer[TIME_BUFFER_SIZE-1] = functionCallTime;
-        return false;
+        return 0;
     }
     
     // A step has occured
-
     // Move over all the data in this buffer by 1
     for (int i = 0; i < TIME_BUFFER_SIZE - 1; i++){
         movingAvgTimeBuffer[i] = movingAvgTimeBuffer[i+1];
@@ -51,7 +53,7 @@ bool addReading(int reading){
     movingAvgTimeBuffer[TIME_BUFFER_SIZE-1] = functionCallTime;
 
     // Return true because a step occured
-    return true;
+    return 1;
 }
 
 int getAvg(){

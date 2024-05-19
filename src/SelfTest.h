@@ -24,6 +24,9 @@ double tolerance = 0.01; //random value, we can change to get it workig properly
 
 double mapValues(double input);
 
+/**
+ * @returns true if sensor working, false otherwise
+*/
 bool selfTest();
 
 
