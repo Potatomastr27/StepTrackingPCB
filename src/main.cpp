@@ -36,7 +36,8 @@ void setup() {
 void loop() {
     // If we need to do calibration, do it
     if (doCalibration == true){
-        calibrate();
+        if (calibrate() == false)
+            shutdownError("calibrate() returned false");
         doCalibration = false;
         // After calibration we need to reset the stepAnalysis data as the data is no longer relevant
         setupAnalysis();
