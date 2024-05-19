@@ -24,7 +24,9 @@ void setup() {
 
     setupPins();
     setupLCD();
-    setupAnalysis();    
+    setupAnalysis();
+
+    readEEPROM();
 
     if (selfTest() == false)
         shutdownError("Self Test Failed");
