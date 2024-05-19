@@ -11,8 +11,6 @@ void setup() {
     setupPins();
     setupLCD();
     
-    lcd.setCursor(0,0);
-    lcd.print("Hello World");
     Serial.println("Begin");
     delay(10000);
 }
@@ -28,17 +26,5 @@ void loop() {
         digitalWrite(RUNNING_PIN, !digitalRead(RUNNING_PIN)); // Toggle Pin
         delay(100);
         prevBlink = millis();
-    }
-
-    // 
-    if (digitalRead(RESET_STEP_PIN) == BUTTON_PRESSED){
-        lcd.clear();
-        snprintf(lcdBuffer, 32, "X: %i Y:%iZ:%i", analogRead(FILTERED_X_AXIS_PIN), analogRead(FILTERED_Y_AXIS_PIN), analogRead(FILTERED_Z_AXIS_PIN));
-        lcd.print(lcdBuffer);
-    }
-    else{
-        lcd.clear();
-        snprintf(lcdBuffer, 32, "Hello World!");
-        lcd.print(lcdBuffer);
     }
 }

@@ -13,7 +13,7 @@ const uint8_t SELF_TEST_PIN = 5;             //D5
 const uint8_t STATIONARY_PIN = 8;            //D8
 const uint8_t WALKING_PIN = 9;               //D9
 const uint8_t RUNNING_PIN = 10;              //D10
-//D11
+const uint8_t ENABLE_3V = 11;                //D11
 //D12
 //D13
 
@@ -37,5 +37,7 @@ void setupPins(){
     pinMode(STATIONARY_PIN, OUTPUT);
     pinMode(WALKING_PIN, OUTPUT);
     pinMode(RUNNING_PIN,OUTPUT);
+    pinMode(ENABLE_3V, OUTPUT);
+    digitalWrite(ENABLE_3V, HIGH); // Enable 3V system by default
 }
 #endif
