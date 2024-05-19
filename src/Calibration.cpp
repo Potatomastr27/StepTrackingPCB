@@ -1,7 +1,12 @@
 #include "Calibration.h"
 
 int calibrate(){
+    calibrateAxis(x_min, x_max, 'X');
+    calibrateAxis(y_min, y_max, 'Y');
+    calibrateAxis(z_min, z_max, 'Z');
 
+    printLCD(0,0, "Calibration Complete");
+    delay(300); // Display "Calibration Complete" for 300ms second
 }
 
 // Function to calibrate a specific axis
@@ -51,7 +56,7 @@ void calibrateAxis(int &minVal, int &maxVal, char axis) {
     printLCD(0,0, lcdBuffer);
     
 
-    delay(1000); // Display "Calibration Complete" for 1 second
+    delay(300); // Display "Calibration Complete" for 300ms second
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
