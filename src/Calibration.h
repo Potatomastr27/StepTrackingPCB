@@ -1,3 +1,6 @@
+#ifndef CALIBRATION_H
+#define CALIBRATION_H
+
 #include "lcd.h"
 #include "pinDef.h"
 
@@ -32,3 +35,6 @@ int readSensor(char axis);
  * @returns An int representing the acceleration of that axis
 */
 int getCalibratedReading(char axis);
+
+
+#endif

@@ -1,5 +1,5 @@
-#ifndef pinDef_h
-#define pinDef_h
+#ifndef PINDEF_H
+#define PINDEF_H
 
 #include <Arduino.h>
 //D0

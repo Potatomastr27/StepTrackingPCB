@@ -1,3 +1,5 @@
+#ifndef SELFTEST_H
+#define SELFTEST_H
 #include "pinDef.h"
 
 #include <Arduino.h>
@@ -37,3 +39,6 @@ int getXAcceleration();
 int getYAcceleration();
 
 int getZAcceleration();
+
+
+#endif
