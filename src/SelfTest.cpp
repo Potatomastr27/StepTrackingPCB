@@ -1,11 +1,5 @@
 #include "SelfTest.h"
 
-void setup() {
-  // pinMode(stPwrPin, OUTPUT);
-  // pinMode(xacceleration, INPUT);
-  // pinMode(yacceleration, INPUT);
-  // pinMode(zacceleration, INPUT);
-}
 
 double mapValues(double input){
   double value = map(input, analogLow, analogHigh, voltageLow, voltageHigh);
