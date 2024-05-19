@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include "../pinDef.h"
-#include "../lcd.h"
+#include <pinDef.h>
+#include <lcd.h>
 
 long prevBlink = 0;
 

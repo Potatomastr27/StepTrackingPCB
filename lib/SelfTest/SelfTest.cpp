@@ -36,9 +36,9 @@ bool selfTest(){
   accelerationY = getYAcceleration();
   accelerationZ = getZAcceleration();
 //add a tolerance to our expected changed
-  if ((expectedChangeX - tolerance <= accelerationX - initialX <= expectedChangeX + tolerance) && 
-      (expectedChangeY - tolerance <= accelerationY - initialY <= expectedChangeY + tolerance) && 
-      (expectedChangeZ - tolerance <= accelerationZ - initialZ <= expectedChangeZ + tolerance)){
+  if ((((expectedChangeX - tolerance) <= (accelerationX - initialX)) <= (expectedChangeX + tolerance)) && 
+      (((expectedChangeY - tolerance) <= (accelerationY - initialY)) <= (expectedChangeY + tolerance)) && 
+      (((expectedChangeZ - tolerance) <= (accelerationZ - initialZ)) <= (expectedChangeZ + tolerance))){
     return true;
   }
   else{
