@@ -1,5 +1,14 @@
 #include "Calibration.h"
 
+// Calibration parameters
+int x_min, x_max, y_min, y_max, z_min, z_max;
+
+// Calibration flags
+volatile bool calibrationMode = false;
+
+unsigned long stepStartTime = 0;
+unsigned long currentTime = 0;
+
 int calibrate(){
     calibrateAxis(x_min, x_max, 'X');
     calibrateAxis(y_min, y_max, 'Y');
@@ -7,6 +16,7 @@ int calibrate(){
 
     printLCD("Calibration Complete");
     delay(300); // Display "Calibration Complete" for 300ms second
+    return 1;
 }
 
 // Function to calibrate a specific axis

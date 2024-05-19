@@ -1,5 +1,18 @@
 #include "stepAnalysis.h"
 
+#define BUFFER_SIZE 5
+int movingAvgBuffer[BUFFER_SIZE];
+
+const uint32_t stepAmplitudeThreshold = 1000;
+const uint32_t stepFrequencyWalk = 2;
+const uint32_t stepFrequencyRun = 3;
+
+int avg;
+
+// Stores the time at which the last 5 steps occured
+#define TIME_BUFFER_SIZE 5
+long movingAvgTimeBuffer[TIME_BUFFER_SIZE]; // The last entry of the buffer will be updated every call even if no step has occured
+long avgStepTime;
 
 void setupAnalysis(){
     // Fill with initial data
@@ -95,7 +108,7 @@ int getMovementRate(){
         return 2;
     if (freqSteps > stepFrequencyWalk)
         return 1;
-    if (freqSteps > 0);
+    if (freqSteps > 0)
         return 0;
     Serial.print("ERROR: Invalid Frequency Value = ");
     Serial.println(freqSteps);

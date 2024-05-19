@@ -2,21 +2,9 @@
 #define STEPANALYSIS_H
 
 #include <Arduino.h>
-#include "pinDef.h"
+#include "../../include/pinDef.h"
 
-#define BUFFER_SIZE 5
-int movingAvgBuffer[BUFFER_SIZE];
 
-const uint32_t stepAmplitudeThreshold = 1000;
-const uint32_t stepFrequencyWalk = 2;
-const uint32_t stepFrequencyRun = 3;
-
-int avg;
-
-// Stores the time at which the last 5 steps occured
-#define TIME_BUFFER_SIZE 5
-long movingAvgTimeBuffer[TIME_BUFFER_SIZE]; // The last entry of the buffer will be updated every call even if no step has occured
-long avgStepTime;
 
 /**
  * @brief Sets all the interal data to their inital values

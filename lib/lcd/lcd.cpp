@@ -1,6 +1,11 @@
 #include "lcd.h"
 
+Adafruit_SSD1306 display;
+char lcdBuffer[100];
+
+
 void setupLCD(){
+    display = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire);
         // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
     if(!display.begin(SSD1306_SWITCHCAPVCC) /*Address goes here*/) {
         Serial.println(F("SSD1306 allocation failed"));

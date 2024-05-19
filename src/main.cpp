@@ -1,11 +1,11 @@
 #include <Arduino.h>
 #include <math.h>
 
-#include "SelfTest.h"
-#include "Calibration.h"
-#include "pinDef.h"
-#include "lcd.h"
-#include "stepAnalysis.h"
+#include <SelfTest.h>
+#include <Calibration.h>
+#include <pinDef.h>
+#include <lcd.h>
+#include <stepAnalysis.h>
 
 void shutdownError(char* msg);
 void buttonCallback();
@@ -105,7 +105,7 @@ void buttonCallback(){
     long buttonPressLength = millis() - buttonPressTime;
 
     // If it was held for more than 2 seconds, we tell the main loop to run the calibration sequence
-    if (buttonPressTime > 2000){
+    if (buttonPressLength > 2000){
         doCalibration = true;
     }
 }

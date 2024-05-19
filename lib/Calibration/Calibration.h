@@ -1,18 +1,11 @@
 #ifndef CALIBRATION_H
 #define CALIBRATION_H
 
-#include "lcd.h"
-#include "pinDef.h"
+#include <Arduino.h>
+#include "../../include/pinDef.h"
+#include <lcd.h>
 
-// Calibration parameters
-int x_min, x_max, y_min, y_max, z_min, z_max;
-
-// Calibration flags
-volatile bool calibrationMode = false;
-
-unsigned long stepStartTime = 0;
-unsigned long currentTime = 0;
-
+extern char lcdBuffer[100];
 /**
  * @brief Will start the calibration sequence
  * 
