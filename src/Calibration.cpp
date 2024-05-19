@@ -13,13 +13,13 @@ int calibrate(){
 void calibrateAxis(int &minVal, int &maxVal, char axis) {
     int highSum, lowSum = 0;
 
-    sprintf(lcdBuffer, "-%c\nPlease Position System Then press button", axis);
+    sprintf(lcdBuffer, "-%c\r\nPlease Position System Then press button", axis);
     printLCD(0,0, lcdBuffer);
 
     // Wait until button is pressed
     while(/*Button is not presed*/false);
 
-    sprintf(lcdBuffer, "-%c\nCalibrating...", axis);
+    sprintf(lcdBuffer, "-%c\r\nCalibrating...", axis);
     printLCD(0,0, lcdBuffer);
 
     // Get 20 low values
@@ -38,7 +38,7 @@ void calibrateAxis(int &minVal, int &maxVal, char axis) {
     // Wait until button is pressed
     while(/*Button is not presed*/false);
 
-    sprintf(lcdBuffer, "+%c\nCalibrating...", axis);
+    sprintf(lcdBuffer, "+%c\r\nCalibrating...", axis);
     printLCD(0,0, lcdBuffer);
 
 
