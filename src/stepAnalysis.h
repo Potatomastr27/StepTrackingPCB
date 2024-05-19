@@ -4,8 +4,11 @@
 #include <Arduino.h>
 #include "pinDef.h"
 
+#define BUFFER_SIZE 5
+int movingAvgBuffer[BUFFER_SIZE];
 
-int movingAvgBuffer[5];
+const uint32_t stepAmplitudeThreshold = 1000;
+
 int avg;
 
 void setupAnalysis();
@@ -13,7 +16,7 @@ void setupAnalysis();
 /**
  * @returns Whether or not a step occured
 */
-int addReading(int reading);
+bool addReading(int reading);
 
 int getAvg();
 
