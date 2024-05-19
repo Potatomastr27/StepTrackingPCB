@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include "../../include/pinDef.h"
 #include <lcd.h>
+#include <EEPROM.h>
 
 extern char lcdBuffer[100];
 /**
@@ -28,6 +29,10 @@ int readSensor(char axis);
  * @returns An int representing the acceleration of that axis
 */
 int getCalibratedReading(char axis);
+
+void readEEPROM();
+
+void writeEEPROM();
 
 
 #endif

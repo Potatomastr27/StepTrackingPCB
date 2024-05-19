@@ -10,9 +10,13 @@ unsigned long stepStartTime = 0;
 unsigned long currentTime = 0;
 
 int calibrate(){
+    // Calibrate on each axis
     calibrateAxis(x_min, x_max, 'X');
     calibrateAxis(y_min, y_max, 'Y');
     calibrateAxis(z_min, z_max, 'Z');
+
+    // Save calibration data
+    writeEEPROM();
 
     printLCD("Calibration Complete");
     delay(300); // Display "Calibration Complete" for 300ms second
@@ -69,8 +73,6 @@ void calibrateAxis(int &minVal, int &maxVal, char axis) {
     delay(300); // Display "Calibration Complete" for 300ms second
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
 // Function to read sensor value based on the specified axis
 int readSensor(char axis) {
     int pin;
@@ -91,4 +93,35 @@ int readSensor(char axis) {
     }
 
     return analogRead(pin);
+}
+
+int getCalibratedReading(char axis){
+    switch (axis){
+        case 'X':
+            return map(analogRead(FILTERED_X_AXIS_PIN), 0, 1024, x_min, x_max);
+        case 'Y':
+            return map(analogRead(FILTERED_Y_AXIS_PIN), 0, 1024, y_min, y_max);
+        case 'Z':
+            return map(analogRead(FILTERED_Z_AXIS_PIN), 0, 1024, z_min, z_max);
+    }
+
+    return -1;
+}
+
+void readEEPROM(){
+    x_min = EEPROM.read(0);
+    x_max = EEPROM.read(1);
+    y_min = EEPROM.read(2);
+    y_max = EEPROM.read(3);
+    z_min = EEPROM.read(4);
+    z_max = EEPROM.read(5);
+}
+
+void writeEEPROM(){
+    EEPROM.write(0, x_min);
+    EEPROM.write(1, x_max);
+    EEPROM.write(2, y_min);
+    EEPROM.write(3, y_max);
+    EEPROM.write(4, z_min);
+    EEPROM.write(5, z_max);
 }
