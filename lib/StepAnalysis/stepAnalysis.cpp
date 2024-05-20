@@ -43,12 +43,13 @@ int addReading(int reading){
     newAvg = newAvg / BUFFER_SIZE;
 
     // We want to only trigger a step count on a rising edge so that we dont double count
-
+    
+    // Check if the new average is above the threshold and the previous is below, this means that a step has occured
     bool hasStepOccured = (newAvg > stepAmplitudeThreshold) && ((avg > stepAmplitudeThreshold) == false);
 
     // Set the prevAvg to the new average for the next time we run this function
     avg = newAvg;
-    // Check if the new average is above the threshold and the previous is below, this means that a step has occured
+    // If a step has not occured we want to exit function early
     if (hasStepOccured == false){
         // A step has not occured so we just need to update the time between steps buffer and return false
         movingAvgTimeBuffer[TIME_BUFFER_SIZE-1] = functionCallTime;
