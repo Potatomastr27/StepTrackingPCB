@@ -84,12 +84,16 @@ int getMovementRate(){
     long avgTimeBetweenSteps, avgTimeInclNextStep = 0;
     double freqSteps, freqInclNextStep = 0;
 
-    for (int i = 0; i < TIME_BUFFER_SIZE-1; i++){
-        // Sum the difference between step times to get time between steps
-        avgTimeInclNextStep += movingAvgTimeBuffer[i+1] - movingAvgTimeBuffer[i];
-    }
+    // for (int i = 0; i < TIME_BUFFER_SIZE-1; i++){
+    //     // Sum the difference between step times to get time between steps
+    //     avgTimeInclNextStep += movingAvgTimeBuffer[i+1] - movingAvgTimeBuffer[i];
+    // }
+    // Sum the difference between step times to get time between steps = last entry - first entry
+    avgTimeInclNextStep = movingAvgTimeBuffer[TIME_BUFFER_SIZE-1] - movingAvgTimeBuffer[0];
+
     // Exclude the last entry for time between steps so take it out
-    avgTimeBetweenSteps = avgTimeInclNextStep - (movingAvgTimeBuffer[TIME_BUFFER_SIZE-1] - movingAvgTimeBuffer[TIME_BUFFER_SIZE-2]);
+    // avgTimeBetweenSteps = avgTimeInclNextStep - (movingAvgTimeBuffer[TIME_BUFFER_SIZE-1] - movingAvgTimeBuffer[TIME_BUFFER_SIZE-2]);
+    avgTimeBetweenSteps = movingAvgTimeBuffer[TIME_BUFFER_SIZE-2] - movingAvgTimeBuffer[0];
 
     // We now have our averages so we must next calculate the frequency of steps
 
