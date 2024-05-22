@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <pinDef.h>
 #include <lcd.h>
+#include <Calibration.h>
 
 long prevBlink = 0;
 
@@ -18,11 +19,13 @@ void setup() {
     Serial.println("Done, waiting 10 seconds");
     delay(1000);
 
+    calibrate();
+
 }
 
 void loop() {
     Serial.println("Using sprintf");
-    sprintf(lcdBuffer, "X: %i\r\nY: %i\r\nZ: %i", analogRead(FILTERED_X_AXIS_PIN), analogRead(FILTERED_Y_AXIS_PIN), analogRead(FILTERED_Z_AXIS_PIN));
+    sprintf(lcdBuffer, "X: %i\r\nY: %i\r\nZ: %i", getCalibratedReading('X'), getCalibratedReading('Y'), getCalibratedReading('Z'));
     // Debug code
     Serial.print("Buffer Contents: ");
     Serial.println(lcdBuffer);

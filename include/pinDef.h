@@ -20,9 +20,9 @@ const uint8_t ENABLE_3V = 11;                //D11
 const uint8_t I2C_DATA_PIN = SDA;            //SDA
 const uint8_t I2C_CLOCK_PIN = SCL;           //SCL
 
-const uint8_t FILTERED_X_AXIS_PIN = A0;      //A0
+const uint8_t FILTERED_X_AXIS_PIN = A2;      //A0
 const uint8_t FILTERED_Y_AXIS_PIN = A1;      //A1
-const uint8_t FILTERED_Z_AXIS_PIN = A2;      //A2
+const uint8_t FILTERED_Z_AXIS_PIN = A0;      //A2
 //A3
 //A4
 //A5
@@ -38,6 +38,9 @@ inline void setupPins(){
     pinMode(WALKING_PIN, OUTPUT);
     pinMode(RUNNING_PIN,OUTPUT);
     pinMode(ENABLE_3V, OUTPUT);
+    
     digitalWrite(ENABLE_3V, HIGH); // Enable 3V system by default
+
+    analogReference(EXTERNAL); // Tell it to reference the ARef pin
 }
 #endif
