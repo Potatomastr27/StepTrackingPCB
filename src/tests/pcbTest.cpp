@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <pinDef.h>
-#include <lcd.h>
 
 long prevBlink = 0;
 
@@ -9,7 +8,6 @@ void setup() {
     Serial.begin(9600);
 
     setupPins();
-    setupLCD();
     
     Serial.println("Begin");
     delay(10000);
