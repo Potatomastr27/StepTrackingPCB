@@ -40,6 +40,7 @@ inline void setupPins(){
     pinMode(ENABLE_3V, OUTPUT);
     
     digitalWrite(ENABLE_3V, HIGH); // Enable 3V system by default
+    digitalWrite(SELF_TEST_PIN, HIGH); // Disable self test pin by default
 
     analogReference(EXTERNAL); // Tell it to reference the ARef pin
 }

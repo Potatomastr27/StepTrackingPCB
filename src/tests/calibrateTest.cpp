@@ -21,11 +21,16 @@ void setup() {
 
     calibrate();
 
+    readEEPROM();
 }
 
 void loop() {
+    int x = getCalibratedReading('X');
+    int y = getCalibratedReading('Y');
+    int z = getCalibratedReading('Z');
+    int absAcc = sqrt(square(x) + square(y) + square(z)) - 1000;
     Serial.println("Using sprintf");
-    sprintf(lcdBuffer, "X: %i\r\nY: %i\r\nZ: %i", getCalibratedReading('X'), getCalibratedReading('Y'), getCalibratedReading('Z'));
+    sprintf(lcdBuffer, "X: %i\r\nY: %i\r\nZ: %i\r\nAbs: %i", x, y, z, absAcc);
     // Debug code
     Serial.print("Buffer Contents: ");
     Serial.println(lcdBuffer);

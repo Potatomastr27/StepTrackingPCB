@@ -1,10 +1,9 @@
 #ifndef SELFTEST_H
 #define SELFTEST_H
-#include "../../include/pinDef.h"
 
 #include <Arduino.h>
-
-double mapValues(double input);
+#include "../../include/pinDef.h"
+#include <lcd.h>
 
 /**
  * @returns true if sensor working, false otherwise
@@ -12,9 +11,9 @@ double mapValues(double input);
 bool selfTest();
 
 
-void setSTPinHigh();
+void turnSTOn();
 
-void setSTPinLow();
+void turnSTOff();
 
 int getXAcceleration();
 

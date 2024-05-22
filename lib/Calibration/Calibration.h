@@ -15,7 +15,7 @@ extern char lcdBuffer[100];
 int calibrate();
 
 // Calibration function declarations
-void calibrateAxis(int &minVal, int &maxVal, char axis);
+void calibrateAxis(int &minVal, int &maxVal, int &normVal, char minMaxAxis, char normAxis);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 

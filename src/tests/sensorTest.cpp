@@ -28,5 +28,4 @@ void loop() {
     Serial.println(lcdBuffer);
     Serial.println("Sending to LCD");
     printLCD(0,0, lcdBuffer,1,WHITE);
-
 }

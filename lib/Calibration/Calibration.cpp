@@ -1,13 +1,19 @@
-#include "Calibration.h"
+ #include "Calibration.h"
 
 // Calibration parameters
-int x_neg1g, x_0g, x_1g, y_neg1g, y_0g, y_1g, z_neg1g, z_0g, z_1g;
+struct calibrationParms{
+    int x_neg1g, x_0g, x_1g, y_neg1g, y_0g, y_1g, z_neg1g, z_0g, z_1g;
+};
+
+// Aprox default params, will be overwritten by EEPROM
+calibrationParms params = {600,500,400,600,500,400,600,500,400}; 
+
 
 int calibrate(){
     // Calibrate on each axis
-    calibrateAxis(x_neg1g, x_1g, y_0g, 'X', 'Y');
-    calibrateAxis(y_neg1g, y_1g, z_0g, 'Y', 'Z');
-    calibrateAxis(z_neg1g, z_1g, x_0g, 'Z', 'X');
+    calibrateAxis(params.x_neg1g, params.x_1g, params.y_0g, 'X', 'Y');
+    calibrateAxis(params.y_neg1g, params.y_1g, params.z_0g, 'Y', 'Z');
+    calibrateAxis(params.z_neg1g, params.z_1g, params.x_0g, 'Z', 'X');
 
     // Save calibration data
     writeEEPROM();
@@ -34,7 +40,7 @@ void calibrateAxis(int &minVal, int &maxVal, int &normVal, char minMaxAxis, char
     for (int i = 0; i < 20; i++) {
         lowSum += readSensor(minMaxAxis);
         normSum += readSensor(normAxis);
-        delay(50); // Adjust delay as needed
+        delay(100); // Adjust delay as needed
     }
 
     // Calculate the average for low values
@@ -55,7 +61,7 @@ void calibrateAxis(int &minVal, int &maxVal, int &normVal, char minMaxAxis, char
     for (int i = 0; i < 20; i++) {
         highSum += readSensor(minMaxAxis);
         normSum += readSensor(normAxis);
-        delay(50); // Adjust delay as needed
+        delay(100); // Adjust delay as needed
     }
 
     // Calculate the average for high values
@@ -66,6 +72,7 @@ void calibrateAxis(int &minVal, int &maxVal, int &normVal, char minMaxAxis, char
     
     // Wait until button is pressed
     while(digitalRead(SWITCH_SUBROUTINES_PIN) == BUTTON_RELEASED);
+    delay(300);
 }
 
 // Function to read sensor value based on the specified axis
@@ -91,33 +98,40 @@ int readSensor(char axis) {
 }
 
 int getCalibratedReading(char axis){
+    // get raw reading
+    int rawReading = readSensor(axis);
     switch (axis){
         case 'X':
-            if 
-            return map(analogRead(FILTERED_X_AXIS_PIN), x_neg1g, x_1g, -1024, 1024);
+            // If the raw reading is a positive acceleration, map the reading where 0g -> 0 and 1g -> 1000
+            if (rawReading > params.x_0g)
+                return map(rawReading, params.x_0g, params.x_1g, 0, 1000);
+            // If the raw reading is a negative acceleration, map the reading where -1g -> -1000, 0g -> 0
+            else if (rawReading < params.x_0g)
+                return map(rawReading, params.x_neg1g, params.x_0g, -1000, 0);
+            
         case 'Y':
-            return map(analogRead(FILTERED_Y_AXIS_PIN), y_neg1g, y_1g, -1024, 1024);
+        // If the raw reading is a positive acceleration, map the reading where 0g -> 0 and 1g -> 1000
+            if (rawReading > params.y_0g)
+                return map(rawReading, params.y_0g, params.y_1g, 0, 1000);
+            // If the raw reading is a negative acceleration, map the reading where -1g -> -1000, 0g -> 0
+            else if (rawReading < params.y_0g)
+                return map(rawReading, params.y_neg1g, params.y_0g, -1000, 0);
         case 'Z':
-            return map(analogRead(FILTERED_Z_AXIS_PIN), z_neg1g, z_1g, -1024, 1024);
+        // If the raw reading is a positive acceleration, map the reading where 0g -> 0 and 1g -> 1000
+            if (rawReading > params.z_0g)
+                return map(rawReading, params.z_0g, params.z_1g, 0, 1000);
+            // If the raw reading is a negative acceleration, map the reading where -1g -> -1000, 0g -> 0
+            else if (rawReading < params.z_0g)
+                return map(rawReading, params.z_neg1g, params.z_0g, -1000, 0);
     }
 
     return -1;
 }
 
 void readEEPROM(){
-    x_neg1g = EEPROM.read(0);
-    x_neg1g = EEPROM.read(1);
-    y_neg1g = EEPROM.read(2);
-    y_1g = EEPROM.read(3);
-    z_neg1g = EEPROM.read(4);
-    z_1g = EEPROM.read(5);
+    EEPROM.get(0, params);
 }
 
 void writeEEPROM(){
-    EEPROM.write(0, x_neg1g);
-    EEPROM.write(1, x_neg1g);
-    EEPROM.write(2, y_neg1g);
-    EEPROM.write(3, y_1g);
-    EEPROM.write(4, z_neg1g);
-    EEPROM.write(5, z_1g);
+    EEPROM.put(0, params);
 }
