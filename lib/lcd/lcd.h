@@ -31,7 +31,15 @@ void setupLCD();
 void printLCD(char* msg);
 
 /**
- * @brief Prints to the LCD/OLED Display
+ * @brief Prints to the LCD/OLED Display with inputted text size
+ * 
+ * @param msg The msg to send, can use the provided "lcdBuffer"
+ * @param textSize The size of the text 
+*/
+void printLCD(char* msg, int textSize);
+
+/**
+ * @brief Prints to specific position on the LCD/OLED Display
  * 
  * @param x the column to start in
  * @param y the row to start in
@@ -40,7 +48,7 @@ void printLCD(char* msg);
 void printLCD(int x, int y, char* msg);
 
 /**
- * @brief Prints to the LCD/OLED Display
+ * @brief Prints to specific position the LCD/OLED Display with inputted settings
  * 
  * @param x the column to start in
  * @param y the row to start in
