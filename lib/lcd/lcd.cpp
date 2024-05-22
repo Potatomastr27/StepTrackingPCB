@@ -20,6 +20,10 @@ void printLCD(char* msg){
     printLCD(0,0,msg, defaultTextSize, defaultTextColor);
 }
 
+void printLCD(char* msg, int textSize){
+    printLCD(0,0,msg, textSize, defaultTextColor);
+}
+
 void printLCD(int x, int y, char* msg){
     printLCD(x,y,msg, defaultTextSize, defaultTextColor);
 }
