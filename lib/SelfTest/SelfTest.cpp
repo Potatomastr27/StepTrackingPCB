@@ -20,12 +20,12 @@ bool selfTest(){
 
     turnSTOn();
 
-    delay(10000);
+    delay(2000);
 
     int accelerationX = getXAcceleration();
     int accelerationY = getYAcceleration();
     int accelerationZ = getZAcceleration();
-    //turnSTOff();
+    turnSTOff();
 
     int difX = accelerationX - initialX;
     int difY = accelerationY - initialY;

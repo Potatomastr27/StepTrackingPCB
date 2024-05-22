@@ -3,9 +3,9 @@
 #define BUFFER_SIZE 5
 int movingAvgBuffer[BUFFER_SIZE];
 
-const uint32_t stepAmplitudeThreshold = 1000;
-const uint32_t stepFrequencyWalk = 2;
-const uint32_t stepFrequencyRun = 3;
+const uint32_t stepAmplitudeThreshold = 2000;
+const double stepFrequencyWalk = 0.5;
+const uint32_t stepFrequencyRun = 1;
 
 int avg;
 
@@ -27,12 +27,12 @@ void setupAnalysis(){
 
 int addReading(int reading){
     long functionCallTime = millis(); // We will need to use this later for saving in the time Buffer
-
+    reading = reading - 1000;
     int newAvg = 0;
     // Shift all the readings over by 1 to the left
     for (int i = 0; i < BUFFER_SIZE - 1; i++){
         movingAvgBuffer[i] = movingAvgBuffer[i+1];
-        // Start summing up new average
+        // Start summing up new average, ignoring last entry
         newAvg += movingAvgBuffer[i];
     }
 

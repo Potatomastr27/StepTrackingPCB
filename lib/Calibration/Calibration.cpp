@@ -6,7 +6,7 @@ struct calibrationParms{
 };
 
 // Aprox default params, will be overwritten by EEPROM
-calibrationParms params = {600,500,400,600,500,400,600,500,400}; 
+calibrationParms params = {607,511,408,612,511,409,614,511,411}; 
 
 
 int calibrate(){
@@ -103,29 +103,27 @@ int getCalibratedReading(char axis){
     switch (axis){
         case 'X':
             // If the raw reading is a positive acceleration, map the reading where 0g -> 0 and 1g -> 1000
-            if (rawReading > params.x_0g)
+            if (rawReading < params.x_0g)
                 return map(rawReading, params.x_0g, params.x_1g, 0, 1000);
             // If the raw reading is a negative acceleration, map the reading where -1g -> -1000, 0g -> 0
-            else if (rawReading < params.x_0g)
+            else if (rawReading > params.x_0g)
                 return map(rawReading, params.x_neg1g, params.x_0g, -1000, 0);
             
         case 'Y':
         // If the raw reading is a positive acceleration, map the reading where 0g -> 0 and 1g -> 1000
-            if (rawReading > params.y_0g)
+            if (rawReading < params.y_0g)
                 return map(rawReading, params.y_0g, params.y_1g, 0, 1000);
             // If the raw reading is a negative acceleration, map the reading where -1g -> -1000, 0g -> 0
-            else if (rawReading < params.y_0g)
+            else if (rawReading > params.y_0g)
                 return map(rawReading, params.y_neg1g, params.y_0g, -1000, 0);
         case 'Z':
         // If the raw reading is a positive acceleration, map the reading where 0g -> 0 and 1g -> 1000
-            if (rawReading > params.z_0g)
+            if (rawReading < params.z_0g)
                 return map(rawReading, params.z_0g, params.z_1g, 0, 1000);
             // If the raw reading is a negative acceleration, map the reading where -1g -> -1000, 0g -> 0
-            else if (rawReading < params.z_0g)
+            else if (rawReading > params.z_0g)
                 return map(rawReading, params.z_neg1g, params.z_0g, -1000, 0);
     }
-
-    return -1;
 }
 
 void readEEPROM(){

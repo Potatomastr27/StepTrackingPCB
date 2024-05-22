@@ -19,7 +19,7 @@ void setup() {
     Serial.println("Done, waiting 10 seconds");
     delay(1000);
 
-    calibrate();
+    //calibrate();
 
     readEEPROM();
 }
@@ -30,7 +30,7 @@ void loop() {
     int z = getCalibratedReading('Z');
     int absAcc = sqrt(square(x) + square(y) + square(z)) - 1000;
     Serial.println("Using sprintf");
-    sprintf(lcdBuffer, "X: %i\r\nY: %i\r\nZ: %i\r\nAbs: %i", x, y, z, absAcc);
+    sprintf(lcdBuffer, "X: %i %i\r\nY: %i %i\r\nZ: %i %i\r\nAbs: %i", x, analogRead(FILTERED_X_AXIS_PIN), y, analogRead(FILTERED_Y_AXIS_PIN), z, analogRead(FILTERED_Z_AXIS_PIN), absAcc);
     // Debug code
     Serial.print("Buffer Contents: ");
     Serial.println(lcdBuffer);

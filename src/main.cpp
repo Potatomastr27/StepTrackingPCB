@@ -47,16 +47,7 @@ void loop() {
     // Get latest readings
     x_axis = getCalibratedReading('X');
     y_axis = getCalibratedReading('Y');
-    z_axis = getCalibratedReading('Z');
-
-    // Error checking
-    if (x_axis < 0)
-        shutdownError("X axis Calibrated Reading is invalid");
-    if (y_axis < 0)
-        shutdownError("Y axis Calibrated Reading is invalid");
-    if (z_axis < 0)
-        shutdownError("Z axis Calibrated Reading is invalid");
-    
+    z_axis = getCalibratedReading('Z');    
 
     // Calculate absolute acceleration
     absAccelleration = sqrt(square(x_axis) + square(y_axis) + square(z_axis));
