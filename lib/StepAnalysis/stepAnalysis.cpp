@@ -1,13 +1,21 @@
 #include "stepAnalysis.h"
 
-#define BUFFER_SIZE 5
+#define BUFFER_SIZE 8
 int movingAvgBuffer[BUFFER_SIZE];
 
-const uint32_t stepAmplitudeThreshold = 2000;
+const int32_t stepAmplitudeThresholdLow = 140;
+const int32_t stepAmplitudeThresholdHigh = 320;
 const double stepFrequencyWalk = 0.5;
-const uint32_t stepFrequencyRun = 1;
+const int32_t stepFrequencyRun = 1;
 
 int avg;
+enum state {
+    Normal,
+    StepCandidate,
+    StepRecovery
+};
+state stepState = Normal;
+int readingCount = 0;
 
 // Stores the time at which the last 5 steps occured
 #define TIME_BUFFER_SIZE 5
@@ -27,7 +35,9 @@ void setupAnalysis(){
 
 int addReading(int reading){
     long functionCallTime = millis(); // We will need to use this later for saving in the time Buffer
-    reading = reading - 1000;
+    // Cap the reading at 0
+    if (reading < 0)
+        reading = 0;
     int newAvg = 0;
     // Shift all the readings over by 1 to the left
     for (int i = 0; i < BUFFER_SIZE - 1; i++){
@@ -41,32 +51,61 @@ int addReading(int reading){
     //Calculate new average
     newAvg += reading;
     newAvg = newAvg / BUFFER_SIZE;
-
-    // We want to only trigger a step count on a rising edge so that we dont double count
-    
-    // Check if the new average is above the threshold and the previous is below, this means that a step has occured
-    bool hasStepOccured = (newAvg > stepAmplitudeThreshold) && ((avg > stepAmplitudeThreshold) == false);
-
-    // Set the prevAvg to the new average for the next time we run this function
     avg = newAvg;
-    // If a step has not occured we want to exit function early
-    if (hasStepOccured == false){
-        // A step has not occured so we just need to update the time between steps buffer and return false
-        movingAvgTimeBuffer[TIME_BUFFER_SIZE-1] = functionCallTime;
-        return 0;
-    }
-    
-    // A step has occured
-    // Move over all the data in this buffer by 1
-    for (int i = 0; i < TIME_BUFFER_SIZE - 1; i++){
-        movingAvgTimeBuffer[i] = movingAvgTimeBuffer[i+1];
-    }
-    
-    // Append another time onto the end to represent the next incomplete step
+
+    // For calculating step frequency
     movingAvgTimeBuffer[TIME_BUFFER_SIZE-1] = functionCallTime;
 
-    // Return true because a step occured
-    return 1;
+    if (stepState == StepRecovery){
+        if (reading < stepAmplitudeThresholdLow)
+            stepState = Normal;
+        return 0;
+    }
+
+    // Check if we have gone above the low theshold, if we have then this is a possible step, further analysis is needed
+    if (reading > stepAmplitudeThresholdLow && stepState == Normal){
+        stepState = StepCandidate;
+        readingCount = 1;
+        return 0;
+    }
+
+    // If the program thinks a step could not be occuring exit
+    if (stepState == Normal){
+        return 0;
+    }
+    // Increment the amount of readings we have recieved since stepCandidtate was set true
+    readingCount++;
+    // If the buffer has filled up with readings we are ready to analyse the buffer
+    if (readingCount < BUFFER_SIZE){
+        return 0;
+    }
+
+    // Get the peak reading from the buffer
+    int peakReading = 0;
+    for (auto reading : movingAvgBuffer){
+        if (reading > peakReading)
+            peakReading = reading;
+    }
+    
+    // We analyse based on the peak reading
+    // Check if the peak reding is within the threshold
+    bool peakReadingWithinThreshold = peakReading > stepAmplitudeThresholdLow && peakReading < stepAmplitudeThresholdHigh;
+
+    // If the peak reading is within the theshold a step has occured so count it
+    if (peakReadingWithinThreshold){
+        stepState = StepRecovery;
+        
+        // Saving step time data for frequency analysis
+        for (int i = 0; i < TIME_BUFFER_SIZE - 1; i++){
+            movingAvgTimeBuffer[i] = movingAvgTimeBuffer[i+1];
+        }
+    
+        // Append another time onto the end to represent the next incomplete step
+        movingAvgTimeBuffer[TIME_BUFFER_SIZE-1] = functionCallTime;
+        return 1;
+    }
+    
+    return 0;
 }
 
 int getAvg(){
