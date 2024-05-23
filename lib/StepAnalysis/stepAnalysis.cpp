@@ -5,10 +5,12 @@ int movingAvgBuffer[BUFFER_SIZE];
 
 const int32_t stepAmplitudeThresholdLow = 140;
 const int32_t stepAmplitudeThresholdHigh = 320;
-const double stepFrequencyWalk = 0.5;
-const int32_t stepFrequencyRun = 1;
+const double stepFrequencyWalk = 0.25;
+const double stepFrequencyRun = 0.65;
 
 int avg;
+double freq;
+
 enum state {
     Normal,
     StepCandidate,
@@ -138,6 +140,8 @@ int getMovementRate(){
     freqSteps = 1/(((double)avgTimeBetweenSteps)/1000);
     freqInclNextStep = 1/(((double)avgTimeInclNextStep)/1000);
 
+    freq = freqInclNextStep;
+
     // We have the frequencies so last step is to compare to our set thresholds
 
     // First we need to check if enough time has passed since the last step that we know the user is stationary
@@ -155,4 +159,8 @@ int getMovementRate(){
     Serial.println(freqSteps);
     // If no if statement triggered we must have an invalid frequency value (such as negative) so return -2 to signify this
     return -2;
+}
+
+double getFreq(){
+    return freq;
 }

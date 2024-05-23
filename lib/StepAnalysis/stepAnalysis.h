@@ -24,7 +24,7 @@ int getAvg();
 */
 int getMovementRate();
 
-
+double getFreq();
 
 
 
