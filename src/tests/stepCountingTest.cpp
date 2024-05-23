@@ -33,6 +33,8 @@ void loop() {
 
     // Calculate absolute acceleration
     absAcceleration = sqrt(square(x_axis) + square(y_axis) + square(z_axis)) - 1000;
+    if(absAcceleration < 0)
+        absAcceleration = 0;
     stepCount += addReading(absAcceleration);
 
     // Reset LEDs
