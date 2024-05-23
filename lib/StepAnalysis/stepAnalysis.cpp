@@ -24,11 +24,11 @@ long avgStepTime;
 
 void setupAnalysis(){
     // Fill with initial data
-    for(auto data : movingAvgBuffer){
-        data = 0;
+    for(int i = 0; i < BUFFER_SIZE; i++){
+        movingAvgBuffer[i] = 0;
     }
-    for(auto data : movingAvgTimeBuffer){
-        data = 0;
+    for(int i = 0; i < TIME_BUFFER_SIZE; i++){
+        movingAvgTimeBuffer[i] = 0;
     }
     avg = 0;
 }
@@ -36,8 +36,6 @@ void setupAnalysis(){
 int addReading(int reading){
     long functionCallTime = millis(); // We will need to use this later for saving in the time Buffer
     // Cap the reading at 0
-    if (reading < 0)
-        reading = 0;
     int newAvg = 0;
     // Shift all the readings over by 1 to the left
     for (int i = 0; i < BUFFER_SIZE - 1; i++){

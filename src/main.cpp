@@ -8,6 +8,7 @@
 #include <stepAnalysis.h>
 
 void shutdownError(char* msg);
+void shutdown();
 void buttonCallback();
 
 
@@ -15,7 +16,9 @@ double absAccelleration;
 int x_axis,y_axis,z_axis;
 
 int stepCount = 0;
+
 long buttonPressTime = 0;
+bool buttonWasPressed = false; // To ensure the system doesn't think button was pressed/held when it is initialised
 
 bool doCalibration = false;
 
@@ -29,7 +32,10 @@ void setup() {
     readEEPROM();
 
     if (selfTest() == false)
-        shutdownError("Self Test Failed");
+        shutdown();
+
+    // Wait to make sure everything is ready
+    delay(1000);
 
     // Add an external interrupt on pin 3 for switch subroutine button
     attachInterrupt(INT1, buttonCallback, CHANGE);
@@ -50,7 +56,12 @@ void loop() {
     z_axis = getCalibratedReading('Z');    
 
     // Calculate absolute acceleration
-    absAccelleration = sqrt(square(x_axis) + square(y_axis) + square(z_axis));
+    absAccelleration = sqrt(square(x_axis) + square(y_axis) + square(z_axis)) - 1000;
+    
+    // Filter out any accelleration acting against gravity, it makes the step couting harder
+    if (absAccelleration < 0)
+        absAccelleration = 0;
+
     // Update the reading for the step count with the new data
     stepCount += addReading(absAccelleration);
 
@@ -98,15 +109,24 @@ void shutdownError(char* msg){
     while(true);
 }
 
+void shutdown(){
+    while(true);
+}
+
 void buttonCallback(){
     // If the button was pressed we record the time it was pressed
     if (digitalRead(SWITCH_SUBROUTINES_PIN) == BUTTON_PRESSED){
         buttonPressTime = millis();
+        buttonWasPressed = true;
         return;
     }
+    // If the button was never pressed, then we dont do anything
+    if (buttonWasPressed == false)
+        return;
     // Otherwise we check how long the button was held for
     long buttonPressLength = millis() - buttonPressTime;
-
+    // Button was released so reset the check
+    buttonWasPressed = false;
     // If it was held for more than 2 seconds, we tell the main loop to run the calibration sequence
     if (buttonPressLength > 2000){
         doCalibration = true;

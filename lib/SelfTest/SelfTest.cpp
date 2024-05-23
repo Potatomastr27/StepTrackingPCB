@@ -14,6 +14,7 @@ int expectedChangeZ = 188;  //+550mV 1.83 G
 int tolerance = 30; // Tollerance for passing the self test
 
 bool selfTest(){
+    printLCD("Self Test\r\nUnderway", 2);
     int initialX = getXAcceleration();
     int initialY = getYAcceleration();
     int initialZ = getZAcceleration();
