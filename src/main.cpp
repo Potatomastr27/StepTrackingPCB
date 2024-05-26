@@ -6,6 +6,7 @@
 #include <pinDef.h>
 #include <lcd.h>
 #include <stepAnalysis.h>
+#include <PaceIdentification.h>
 
 void shutdownError(char* msg);
 void shutdown();
