@@ -23,6 +23,8 @@ void setup() {
     delay(1000);
     stepCount = 0;
 
+    readEEPROM();
+
 }
 
 void loop() {
@@ -59,9 +61,12 @@ void loop() {
             break; //Do Nothing
     }
     char freq[10];
-    dtostrf(getFreq(), 5, 3, freq);
+    dtostrf(getFreq(), 4, 2, freq);
 
-    sprintf(lcdBuffer, "Steps: %i Avg: %i\r\nX: %i\r\nY: %i\r\nZ: %i Freq: %s", stepCount, getAvg(), analogRead(FILTERED_X_AXIS_PIN), analogRead(FILTERED_Y_AXIS_PIN), analogRead(FILTERED_Z_AXIS_PIN), freq);
+    sprintf(lcdBuffer, "S %i A %i F %s\r\nX: %i %i\r\nY: %i %i\r\nZ: %i %i", 
+            stepCount, getAvg(), freq, analogRead(FILTERED_X_AXIS_PIN), getCalibratedReading('X'), 
+            analogRead(FILTERED_Y_AXIS_PIN), getCalibratedReading('Y'), analogRead(FILTERED_Z_AXIS_PIN), 
+            getCalibratedReading('Z'));
 
     printLCD(0,0, lcdBuffer,1,WHITE);
 }
