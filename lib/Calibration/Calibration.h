@@ -19,7 +19,11 @@ void calibrateAxis(int &minVal, int &maxVal, int &normVal, char minMaxAxis, char
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Function to read sensor value based on the specified axis
+/**
+ * @brief Will get the raw reading of the specified axis
+ * @param axis The axis to get the reading of, either 'X', 'Y' or 'Z'
+ * @returns the reading of that axis
+*/ 
 int readSensor(char axis);
 
 /**
@@ -30,8 +34,13 @@ int readSensor(char axis);
 */
 int getCalibratedReading(char axis);
 
+/**
+ * @brief Reads the calibration parameters stored in the EEPROM 
+*/
 void readEEPROM();
-
+/**
+ * @brief Saves the current calibration parameters to the EEPROM
+*/
 void writeEEPROM();
 
 

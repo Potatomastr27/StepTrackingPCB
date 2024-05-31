@@ -17,6 +17,9 @@ void setupAnalysis();
 */
 int addReading(int reading);
 
+/**
+ * @brief Gets the current average reading of the internal buffer (not used)
+*/
 int getAvg();
 /**
  * @brief Returns whether the user is stationary, walking or running
@@ -24,6 +27,9 @@ int getAvg();
 */
 int getMovementRate();
 
+/**
+ * @brief Gets the current estimated stepping frequency
+*/
 double getFreq();
 
 
